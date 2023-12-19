@@ -6,11 +6,13 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 from home.models import Article
-from .permissions import IsStaffOrReadOnly, IsAuthorOrReadOnly, IsSuperUserOrStaffReadOnly
+from .permissions import IsStaffOrReadOnly, IsAuthorOrReadOnly, IsSuperUserOrStaffReadOnly, IsSuperUser
 from .serializers import ArticleSerializer, UserSerializer, AuthorSerializer
 
 
 class ArticleList(ListCreateAPIView):
+    permission_classes = [IsStaffOrReadOnly]
+
     queryset = Article.objects.all()
     serializer_class = ArticleSerializer
 
@@ -70,9 +72,10 @@ class UserDetail(RetrieveUpdateDestroyAPIView):
 
 
 class UserViewSet(ModelViewSet):
+    permission_classes = [IsSuperUserOrStaffReadOnly]
+
     queryset = get_user_model().objects.all()
     serializer_class = UserSerializer
-    permission_classes = [IsSuperUserOrStaffReadOnly]
 
 
 class AuthorRetrieve(RetrieveAPIView):
