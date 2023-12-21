@@ -86,6 +86,6 @@ class AuthorRetrieve(RetrieveAPIView):
 class RevokeToken(APIView):
     permission_classes = [IsAuthenticated]
 
-    def get(self, request):
+    def delete(self, request):
         request.auth.delete()
         return Response({'message': 'token revoked'}, status=status.HTTP_204_NO_CONTENT)
