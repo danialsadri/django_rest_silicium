@@ -6,14 +6,15 @@ from home.models import Article
 class ArticleSerializer(serializers.ModelSerializer):
     # author = serializers.HyperlinkedIdentityField(view_name='api:author_detail')
     # author = serializers.CharField(source='author.username', read_only=True)
-    author = serializers.SerializerMethodField()
+    # author = serializers.SerializerMethodField()
+    # author = AuthorSerializer()
 
     class Meta:
         model = Article
         fields = "__all__"
 
-    def get_author(self, obj):
-        return obj.author.username + ' - ' + obj.author.email
+    # def get_author(self, obj):
+        # return obj.author.username + ' - ' + obj.author.email
 
     def validate_title(self, value):
         filter_list = ['php', 'laravel', 'javascript']
